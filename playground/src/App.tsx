@@ -1,6 +1,8 @@
+'use client';
+
 import { useCallback, useState } from 'react'
 
-import RichTextEditor, { BaseKit } from 'reactjs-tiptap-editor'
+import RichTextEditor, { BaseKit, Editor, MultipleRichTextEditorWrapper, RichTextEditorElement } from 'reactjs-tiptap-editor'
 
 import { locale } from 'reactjs-tiptap-editor/locale-bundle'
 import {
@@ -221,6 +223,7 @@ function App() {
   const [content, setContent] = useState(DEFAULT)
   const [theme, setTheme] = useState('light')
   const [disable, setDisable] = useState(false)
+  const [editor, setEditor] = useState<Editor | undefined>(undefined)
 
   const onValueChange = useCallback(
     debounce((value: any) => {
@@ -256,7 +259,40 @@ function App() {
         <button type="button" onClick={() => setDisable(!disable)}>{disable ? 'Editable' : 'Readonly'}</button>
       </div>
 
-      <RichTextEditor
+      <MultipleRichTextEditorWrapper editor={editor}>
+        <div className="flex gap-2">
+          <RichTextEditorElement
+            output="html"
+            content={content as any}
+            onChangeContent={onValueChange}
+            extensions={extensions}
+            dark={theme === 'dark'}
+            disabled={disable}
+            onFocusEditor={(editor, id) => {
+              console.log('editor', editor)
+              console.log('id', id)
+              setEditor(editor as Editor)
+            }}
+          />
+
+          <RichTextEditorElement
+            output="html"
+            content={content as any}
+            onChangeContent={onValueChange}
+            extensions={extensions}
+            dark={theme === 'dark'}
+            disabled={disable}
+            onFocusEditor={(editor, id) => {
+              console.log('editor', editor)
+              console.log('id', id)
+              setEditor(editor as Editor)
+            }}
+          />
+        </div>
+      </MultipleRichTextEditorWrapper>
+      
+
+      {/* <RichTextEditor
         output="html"
         content={content as any}
         onChangeContent={onValueChange}
@@ -291,7 +327,7 @@ function App() {
             </>
           },
         }}
-      />
+      /> */}
 
       {typeof content === 'string' && (
         <textarea
