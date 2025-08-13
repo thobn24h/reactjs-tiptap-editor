@@ -23,30 +23,38 @@ export interface MultipleRichTextEditorWrapperProps {
 
   /** Children components */
   children?: React.ReactNode
+
+  className?: string
 }
 
 function MultipleRichTextEditorWrapper(props: MultipleRichTextEditorWrapperProps) {
   const { children, ...restProps } = props;
-  
-  return (
-    <div className="reactjs-tiptap-editor">
-      <TooltipProvider delayDuration={0}
-        disableHoverableContent
-      >
-        <div className="richtext-overflow-hidden">
-          <div className="richtext-flex richtext-max-h-full richtext-w-full richtext-flex-col">
-            <Toolbar disabled={!!restProps?.disabled}
-              editor={restProps.editor}
-              toolbar={restProps.toolbar}
-            />
 
-            {children}
+  return (
+    <TooltipProvider delayDuration={0}
+      disableHoverableContent
+    >
+      <div className={`${props.className} relative`}>
+        <div className="absolute top-0 left-0 w-full bg-white z-10">
+          <div className="reactjs-tiptap-editor">
+            <div className="richtext-overflow-hidden">
+              <div className="richtext-flex richtext-max-h-full richtext-w-full richtext-flex-col">
+                <Toolbar disabled={!!restProps?.disabled}
+                  editor={restProps.editor}
+                  toolbar={restProps.toolbar}
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </TooltipProvider>
 
+        {/* Children */}
+        <div>
+          {children}
+        </div>
+      </div>
       <Toaster />
-    </div>
+    </TooltipProvider>
   );
 }
 
