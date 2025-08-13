@@ -91,7 +91,7 @@ function Toolbar({ editor, disabled, toolbar }: ToolbarComponentProps) {
       >
         {item?.spacer && <Separator className="!richtext-mx-[10px] !richtext-h-[16px]"
           orientation="vertical"
-                         />}
+        />}
 
         <ButtonComponent
           {...item.button.componentProps}
@@ -100,7 +100,7 @@ function Toolbar({ editor, disabled, toolbar }: ToolbarComponentProps) {
 
         {item?.divider && <Separator className="!richtext-mx-2 !richtext-h-auto"
           orientation="vertical"
-                          />}
+        />}
       </div>
     );
   });

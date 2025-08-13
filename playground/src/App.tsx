@@ -273,6 +273,7 @@ function App() {
               console.log('id', id)
               setEditor(editor as Editor)
             }}
+            contentClass={`custom-content`}
           />
 
           <RichTextEditorElement

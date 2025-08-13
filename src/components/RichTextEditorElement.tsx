@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useState } from 'react';
 
 import type { AnyExtension, Editor as CoreEditor } from '@tiptap/core';
 import type { UseEditorOptions } from '@tiptap/react';
@@ -82,6 +82,7 @@ export interface RichTextEditorElementProps {
 
 function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.ForwardedRef<{ editor: CoreEditor | null }>) {
   const { content, extensions, useEditorOptions = {} } = props;
+  const [isFocused, setIsFocused] = useState(false);
 
   const id = useId();
 
@@ -112,9 +113,11 @@ function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.For
         onValueChange(editor);
     },
     onBlur: ({ editor }) => {
+      setIsFocused(false);
       props?.onBlurEditor?.(editor, props.editorId || id);
     },
     onFocus: ({ editor }) => {
+      setIsFocused(true);
       props?.onFocusEditor?.(editor, props.editorId || id);
     },
     ...useEditorOptions,
@@ -182,14 +185,16 @@ function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.For
     };
   }, []);
 
-  const hasExtensionValue = hasExtension(editor, 'characterCount');
+  const hasExtensionValue = useMemo(() => {
+    return hasExtension(editor, 'characterCount');
+  }, [editor]);
 
   if (!editor) {
     return <></>;
   }
 
   return (
-    <div className="reactjs-tiptap-editor">
+    <div className="reactjs-tiptap-editor richtext-bg-transparent">
       <ProviderRichText
         id={id}
       >
@@ -208,9 +213,11 @@ function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.For
 
             />
 
-            {hasExtensionValue && <CharactorCount editor={editor}
-              extensions={extensions}
-            />}
+            <div className={`${isFocused ? 'richtext-visible' : 'richtext-invisible'}`}>
+              {hasExtensionValue && <CharactorCount editor={editor}
+                extensions={extensions}
+              />}
+            </div>
 
             {!props?.hideBubble && <BubbleMenu bubbleMenu={props?.bubbleMenu}
               disabled={props?.disabled}

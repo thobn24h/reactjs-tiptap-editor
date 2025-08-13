@@ -11,6 +11,7 @@ import { useLocale } from '@/locales';
 
 import 'https://esm.run/mathlive';
 
+/* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace JSX {
     interface IntrinsicElements {
@@ -18,6 +19,7 @@ declare global {
     }
   }
 }
+/* eslint-enable @typescript-eslint/no-namespace */
 
 function KatexActiveButton({ editor, ...props }: any) {
   const { t } = useLocale();
@@ -26,7 +28,8 @@ function KatexActiveButton({ editor, ...props }: any) {
     text: '',
     defaultShowPicker: false,
   });
-  const { text, defaultShowPicker } = attrs;
+  // const { text, defaultShowPicker } = attrs;
+  const { defaultShowPicker } = attrs;
 
   const [currentValue, setCurrentValue] = useState('');
   const [isOpen, setIsOpen] = useState(defaultShowPicker || false);
