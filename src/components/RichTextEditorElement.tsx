@@ -201,7 +201,7 @@ function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.For
         {/* <TooltipProvider delayDuration={0}
           disableHoverableContent
         > */}
-        <div className={`richtext-overflow-hidden ${isFocused ? 'richtext-bg-gray-200/20' : ''}`}>
+        <div className={`richtext-overflow-hidden ${isFocused ? 'richtext-bg-gray-200/10' : ''}`}>
           <div className="richtext-flex richtext-max-h-full richtext-w-full richtext-flex-col">
             {/* {!props?.hideToolbar && <Toolbar disabled={!!props?.disabled}
                 editor={editor}
