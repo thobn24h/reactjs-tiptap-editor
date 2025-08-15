@@ -78,6 +78,8 @@ export interface RichTextEditorElementProps {
   onFocusEditor?: (editor: CoreEditor | null, id: string) => void;
 
   onBlurEditor?: (editor: CoreEditor | null, id: string) => void;
+
+  showCharacterCount?: boolean
 }
 
 function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.ForwardedRef<{ editor: CoreEditor | null }>) {
@@ -214,7 +216,7 @@ function RichTextEditorElement(props: RichTextEditorElementProps, ref: React.For
             />
 
             <div className={`${isFocused ? 'richtext-visible' : 'richtext-invisible'}`}>
-              {hasExtensionValue && <CharactorCount editor={editor}
+              {hasExtensionValue && props.showCharacterCount && <CharactorCount editor={editor}
                 extensions={extensions}
               />}
             </div>
